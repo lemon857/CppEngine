@@ -149,7 +149,8 @@ namespace std {
 
 string to_string(HexFormatLogging number) {
   stringstream ss;
-  ss << "0x"<< std::hex << std::uppercase << number.m_number;
+  if (number.m_sugar) ss << "0x";
+  ss << std::hex << std::uppercase << number.m_number;
   return ss.str();
 }
 

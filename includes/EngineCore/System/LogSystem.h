@@ -4,10 +4,11 @@
 #include <vector>
 
 struct HexFormatLogging {
-  HexFormatLogging(long long number) : m_number(number) {}
+  HexFormatLogging(long long number, bool sugar = true) : m_number(number), m_sugar(sugar) {}
 
   HexFormatLogging() = delete;
   long long m_number;
+  bool m_sugar;
 };
 
 namespace std {
