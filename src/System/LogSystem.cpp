@@ -4,6 +4,7 @@
 #include "EngineCore/System/SysFunc.h"
 
 #include <iostream>
+#include <sstream>
 #include <chrono>
 #include <ctime>
 #include <fstream>
@@ -144,22 +145,32 @@ void LogSystem::log_crit(std::string msg)
 	}
 }
 
-std::string std::to_string(string str)
+namespace std {
+
+string to_string(HexFormatLogging number) {
+  stringstream ss;
+  ss << "0x"<< std::hex << std::uppercase << number.m_number;
+  return ss.str();
+}
+
+string to_string(string str)
 {
 	return str;
 }
 
-std::string std::to_string(wstring str)
+string to_string(wstring str)
 {
 	return sysfunc::ctostr(str);
 }
 
-std::wstring std::to_wstring(string str)
+wstring to_wstring(string str)
 {
 	return sysfunc::ctowstr(str);
 }
 
-std::wstring std::to_wstring(wstring str)
+wstring to_wstring(wstring str)
 {
 	return str;
+}
+
 }

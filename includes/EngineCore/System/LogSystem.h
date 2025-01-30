@@ -3,12 +3,19 @@
 #include <string>
 #include <vector>
 
-namespace std
-{
-	string to_string(string str);
-	string to_string(wstring str);
-	wstring to_wstring(string str);
-	wstring to_wstring(wstring str);
+struct HexFormatLogging {
+  HexFormatLogging(long long number) : m_number(number) {}
+
+  HexFormatLogging() = delete;
+  long long m_number;
+};
+
+namespace std {
+string to_string(HexFormatLogging number);
+string to_string(string str);
+string to_string(wstring str);
+wstring to_wstring(string str);
+wstring to_wstring(wstring str);
 }
 
 class LogSystem
