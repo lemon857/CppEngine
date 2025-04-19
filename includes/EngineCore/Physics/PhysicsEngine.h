@@ -32,16 +32,16 @@ namespace Physics
 		PhysicsEngine& operator=(const PhysicsEngine&) = delete;
 		PhysicsEngine& operator=(const PhysicsEngine&&) = delete;
 
-		// Инициализация физического движка
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		static void init(bool useGravity = false);
-		static void addDynamicObj(std::shared_ptr<IGameObject>& obj, int id);
+		static void addDynamicObj(std::shared_ptr<IGameObject> obj, int id);
 		static void addImpulse(glm::vec2, int id);
 		static void terminate();
 		static void update(const double delta);
-		// Возвращает указатель на объект с компонентом коллайдера первого вхождения при пересечении 
-		// Сторона касания считается относительно изначального коллайдера
-		static IGameObject* checkIntersection(std::shared_ptr<Collider>& collider, EDirection& outDir);
-		static void addCollider(std::shared_ptr<Collider>& collider);
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		static IGameObject* checkIntersection(std::shared_ptr<Collider> collider, EDirection outDir);
+		static void addCollider(std::shared_ptr<Collider> collider);
 	private:
 		//static bool hasCollidersIntersection(const std::shared_ptr<Collider> collider1, const std::shared_ptr<Collider> collider2);
 

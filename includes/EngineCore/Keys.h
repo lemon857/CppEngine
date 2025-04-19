@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 enum class KeyCode
 {
     KEY_UNKNOWN = -1,

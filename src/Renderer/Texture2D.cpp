@@ -1,5 +1,7 @@
 #include "EngineCore/Renderer/Texture2D.h"
 
+#include <cmath>
+
 namespace RenderEngine 
 {
 	Texture2D::Texture2D(const GLuint width, const GLuint height, unsigned char* data, const unsigned int channels,

@@ -25,7 +25,7 @@ namespace Physics
 	{
 
 	}
-	void PhysicsEngine::addDynamicObj(std::shared_ptr<IGameObject>& obj, int id)
+	void PhysicsEngine::addDynamicObj(std::shared_ptr<IGameObject> obj, int id)
 	{
 		m_dynamicObj.emplace(id, std::move(obj));
 	}
@@ -33,8 +33,8 @@ namespace Physics
 	{
 		m_impulses.emplace(id, impulse);
 	}
-	// ме свхршбюеряъ сцнк онбнпнрю назейрю (мюдечяэ мю тхйя)
-	IGameObject* PhysicsEngine::checkIntersection(std::shared_ptr<Collider>& collider, EDirection& outDir)
+	// О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ (О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫ О©╫О©╫О©╫О©╫)
+	IGameObject* PhysicsEngine::checkIntersection(std::shared_ptr<Collider> collider, EDirection outDir)
 	{
 		for (auto currentCollider : m_colliders)
 		{
@@ -58,7 +58,7 @@ namespace Physics
 		}
 		return nullptr;
 	}
-	void PhysicsEngine::addCollider(std::shared_ptr<Collider>& collider)
+	void PhysicsEngine::addCollider(std::shared_ptr<Collider> collider)
 	{
 		m_colliders.push_back(collider);
 	}

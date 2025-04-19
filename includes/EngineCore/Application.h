@@ -56,7 +56,7 @@ protected:
 	std::unique_ptr<class Window> m_pWindow;
 	bool m_pCloseWindow = true;
 	bool m_maximized_window = false;
-	glm::ivec2& m_window_position = glm::ivec2(100);
+	glm::ivec2 m_window_position = glm::ivec2(100);
 
 	Camera* m_cam;
 

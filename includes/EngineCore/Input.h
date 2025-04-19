@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EngineCore/Keys.h"
+#include <cstddef>
 
 class Input
 {

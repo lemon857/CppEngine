@@ -27,7 +27,7 @@ namespace RenderEngine
 
 		m_vertexArray.unbind();
 	}
-	void Line::render(const glm::vec3& position, const glm::vec3& dir, glm::vec3& color) const
+	void Line::render(const glm::vec3 position, const glm::vec3 dir, glm::vec3 color) const
 	{
 		m_pMaterial->use();
 
@@ -50,7 +50,7 @@ namespace RenderEngine
 
 		Renderer::drawLine(m_vertexArray, m_size);
 	}
-	void Line::render_from_to(const glm::vec3& position, const glm::vec3& to, glm::vec3& color) const
+	void Line::render_from_to(const glm::vec3 position, const glm::vec3 to, glm::vec3 color) const
 	{
 		glm::vec3 dir = to - position;
 

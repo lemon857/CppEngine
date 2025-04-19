@@ -1,4 +1,4 @@
-#include "EngineCore/Resources/ResourceManager.h";
+#include "EngineCore/Resources/ResourceManager.h"
 #include "EngineCore/Renderer/ShaderProgram.h"
 #include "EngineCore/Renderer/Texture2D.h"
 #include "EngineCore/Renderer/Material.h"
@@ -275,7 +275,7 @@ std::shared_ptr<GraphicsObject> ResourceManager::load_OBJ_file(const std::string
 			if (start_with(line, "v "))
 			{
 				GLfloat x, y, z;
-				sscanf_s(line.c_str(), "v %f %f %f", &x, &y, &z);
+				scanf(line.c_str(), "v %f %f %f", &x, &y, &z);
 				temp_pos.push_back(glm::vec3(x, y, z));
 				if (!need_normalize_vertex_pos && (x > 1.f || x < -1.f)) need_normalize_vertex_pos = true;
 #ifdef DEBUG_CONSOLE_OBJ_LOAD
@@ -286,7 +286,7 @@ std::shared_ptr<GraphicsObject> ResourceManager::load_OBJ_file(const std::string
 			else if (start_with(line, "vn "))
 			{
 				GLfloat x, y, z;
-				sscanf_s(line.c_str(), "vn %f %f %f", &x, &y, &z);
+				scanf(line.c_str(), "vn %f %f %f", &x, &y, &z);
 				temp_norms.push_back(glm::vec3(x, y, z));
 #ifdef DEBUG_CONSOLE_OBJ_LOAD
 				LOG_INFO("Norms: {0}x{1}x{2}", x, y, z);
@@ -295,7 +295,7 @@ std::shared_ptr<GraphicsObject> ResourceManager::load_OBJ_file(const std::string
 			else if (start_with(line, "vt "))
 			{
 				GLfloat x, y;
-				sscanf_s(line.c_str(), "vt %f %f", &x, &y);
+				scanf(line.c_str(), "vt %f %f", &x, &y);
 				temp_texs.push_back(glm::vec2(x, y));
 #ifdef DEBUG_CONSOLE_OBJ_LOAD
 				LOG_INFO("Texs: {0}x{1}", x, y);
@@ -307,7 +307,7 @@ std::shared_ptr<GraphicsObject> ResourceManager::load_OBJ_file(const std::string
 				int indexX, textureX, normalX;
 				int indexY, textureY, normalY;
 				int indexZ, textureZ, normalZ;
-				sscanf_s(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
+				scanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
 					&indexX, &textureX, &normalX, &indexY, &textureY, &normalY, &indexZ, &textureZ, &normalZ);
 
 				indices_coords.push_back(indexX - 1);
