@@ -10,19 +10,17 @@
 
 #include "EngineCore/System/Log.h"
 
-class Camera;
+#include "EngineCore/GUI/GUI_element.h"
 
-enum class KeyCode;
+#include "EngineCore/Renderer/Camera.h"
 
-namespace RenderEngine
-{
-	class Material;
-}
+#include "EngineCore/Renderer/Material.h"
+
+#include "EngineCore/System/Keys.h"
+
 
 namespace GUI
 {
-	class GUI_element;
-
 	class GUI_place
 	{
 	public:
@@ -48,21 +46,14 @@ namespace GUI
 			add_elements(element->get_elements());
 			m_elements.emplace(element->get_name(), element);
 			std::string a = typeid(_Ty).name();
-			if (a == "class GUI::Slider")
-			{
+			if (a.find("Slider") != -1)	{
 				m_els_needs_on_mouse_move.push_back(element);
-			}
-			else if (a == "class GUI::InputField")
-			{
+			} else if (a.find("InputField") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
 				m_els_needs_on_char_set.push_back(element);
-			}
-			else if (a == "class GUI::BindButton")
-			{
+			} else if (a.find("BindButton") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
-			}
-			else if (a == "class GUI::ChatBox" || a == "class GUI::ScrollBox")
-			{
+			} else if (a.find("ChatBox") != -1 || a.find("ScrollBox") != -1) {
 				m_els_needs_on_scroll.push_back(element);
 			}
 			return (_Ty*)element;
@@ -82,21 +73,14 @@ namespace GUI
 			m_elements.emplace(element->get_name(), element);
 			element->set_layer(layer);
 			std::string a = typeid(_Ty).name();
-			if (a == "class GUI::Slider")
-			{
+      if (a.find("Slider") != -1)	{
 				m_els_needs_on_mouse_move.push_back(element);
-			}
-			else if (a == "class GUI::InputField")
-			{
+			} else if (a.find("InputField") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
 				m_els_needs_on_char_set.push_back(element);
-			}
-			else if (a == "class GUI::BindButton")
-			{
+			} else if (a.find("BindButton") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
-			}
-			else if (a == "class GUI::ChatBox" || a == "class GUI::ScrollBox")
-			{
+			} else if (a.find("ChatBox") != -1 || a.find("ScrollBox") != -1) {
 				m_els_needs_on_scroll.push_back(element);
 			}
 			return (_Ty*)element;
@@ -115,22 +99,15 @@ namespace GUI
 			add_elements(element->get_elements());
 			m_elements.emplace(element->get_name(), element);
 			element->set_layer(layer);
-			std::string a = typeid(_Ty).name();
-			if (a == "class GUI::Slider")
-			{
+			std::string a = typeid(_Ty).name();			
+			if (a.find("Slider") != -1)	{
 				m_els_needs_on_mouse_move.push_back(element);
-			}
-			else if (a == "class GUI::InputField")
-			{
+			} else if (a.find("InputField") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
 				m_els_needs_on_char_set.push_back(element);
-			}
-			else if (a == "class GUI::BindButton")
-			{
+			} else if (a.find("BindButton") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
-			}
-			else if (a == "class GUI::ChatBox" || a == "class GUI::ScrollBox")
-			{
+			} else if (a.find("ChatBox") != -1 || a.find("ScrollBox") != -1) {
 				m_els_needs_on_scroll.push_back(element);
 			}
 			return (_Ty*)element;
@@ -149,22 +126,15 @@ namespace GUI
 			add_elements(element->get_elements(), element);
 			tree_parent->add_tree_element(element);
 			m_elements.emplace(element->get_name(), element);
-			std::string a = typeid(_Ty).name();
-			if (a == "class GUI::Slider")
-			{
+			std::string a = typeid(_Ty).name();			
+			if (a.find("Slider") != -1)	{
 				m_els_needs_on_mouse_move.push_back(element);
-			}
-			else if (a == "class GUI::InputField")
-			{
+			} else if (a.find("InputField") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
 				m_els_needs_on_char_set.push_back(element);
-			}
-			else if (a == "class GUI::BindButton")
-			{
+			} else if (a.find("BindButton") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
-			}
-			else if (a == "class GUI::ChatBox" || a == "class GUI::ScrollBox")
-			{
+			} else if (a.find("ChatBox") != -1 || a.find("ScrollBox") != -1) {
 				m_els_needs_on_scroll.push_back(element);
 			}
 			return (_Ty*)element;
@@ -185,21 +155,14 @@ namespace GUI
 			m_elements.emplace(element->get_name(), element);
 			element->set_layer(layer);
 			std::string a = typeid(_Ty).name();
-			if (a == "class GUI::Slider")
-			{
+			if (a.find("Slider") != -1)	{
 				m_els_needs_on_mouse_move.push_back(element);
-			}
-			else if (a == "class GUI::InputField")
-			{
+			} else if (a.find("InputField") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
 				m_els_needs_on_char_set.push_back(element);
-			}
-			else if (a == "class GUI::BindButton")
-			{
+			} else if (a.find("BindButton") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
-			}
-			else if (a == "class GUI::ChatBox" || a == "class GUI::ScrollBox")
-			{
+			} else if (a.find("ChatBox") != -1 || a.find("ScrollBox") != -1) {
 				m_els_needs_on_scroll.push_back(element);
 			}
 			return (_Ty*)element;
@@ -220,21 +183,14 @@ namespace GUI
 			m_elements.emplace(element->get_name(), element);
 			element->set_layer(layer);
 			std::string a = typeid(_Ty).name();
-			if (a == "class GUI::Slider")
-			{
+			if (a.find("Slider") != -1)	{
 				m_els_needs_on_mouse_move.push_back(element);
-			}
-			else if (a == "class GUI::InputField")
-			{
+			} else if (a.find("InputField") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
 				m_els_needs_on_char_set.push_back(element);
-			}
-			else if (a == "class GUI::BindButton")
-			{
+			} else if (a.find("BindButton") != -1) {
 				m_els_needs_on_btn_press.push_back(element);
-			}
-			else if (a == "class GUI::ChatBox" || a == "class GUI::ScrollBox")
-			{
+			} else if (a.find("ChatBox") != -1 || a.find("ScrollBox") != -1) {
 				m_els_needs_on_scroll.push_back(element);
 			}
 			return (_Ty*)element;

@@ -44,9 +44,28 @@ namespace RenderEngine
 	{
 		if (!m_shader_data_map.empty())
 		{
-			for (auto cuElement : m_shader_data_map)
+			for (auto curElement : m_shader_layout_elemrnts)
 			{
-				delete[] cuElement.second;
+        std::map<std::string, void*>::iterator it = m_shader_data_map.find(curElement.name);
+        if (it == m_shader_data_map.end()) {
+          continue;
+        }
+        if (it->second == nullptr) {
+          continue;
+        }
+        switch (curElement.type)
+        {
+        case Int:
+          delete[] (int*)(it->second);
+          break;
+        case Float:
+        case Vec3:
+        case Vec4:
+        case Col3:
+        case Col4:
+          delete[] (float*)(it->second);
+          break;
+        }
 			}
 			m_shader_data_map.clear();
 		}
@@ -126,9 +145,28 @@ namespace RenderEngine
 
 		if (!m_shader_data_map.empty())
 		{
-			for (auto& cuElement : m_shader_data_map)
+			for (auto curElement : m_shader_layout_elemrnts)
 			{
-				delete[] cuElement.second;
+        std::map<std::string, void*>::iterator it = m_shader_data_map.find(curElement.name);
+        if (it == m_shader_data_map.end()) {
+          continue;
+        }
+        if (it->second == nullptr) {
+          continue;
+        }
+        switch (curElement.type)
+        {
+        case Int:
+          delete[] (int*)(it->second);
+          break;
+        case Float:
+        case Vec3:
+        case Vec4:
+        case Col3:
+        case Col4:
+          delete[] (float*)(it->second);
+          break;
+        }
 			}
 			m_shader_data_map.clear();
 		}

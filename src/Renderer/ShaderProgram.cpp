@@ -11,13 +11,13 @@ namespace RenderEngine
 		GLuint vertexShaderID;
 		if (!createShader(vertexShader, GL_VERTEX_SHADER, vertexShaderID))
 		{
-			LOG_ERROR("VERTEX SHADER ERROR COMPILE");
+			LOG_ERROR("[shader-program]: VERTEX SHADER ERROR COMPILE");
 			return;
 		}
 		GLuint fragmentShaderID;
 		if (!createShader(fragmentShader, GL_FRAGMENT_SHADER, fragmentShaderID))
 		{
-			LOG_ERROR("FRAGMENT SHADER ERROR COMPILE");
+			LOG_ERROR("[shader-program]: FRAGMENT SHADER ERROR COMPILE");
 			glDeleteShader(vertexShaderID);
 			return;
 		}
@@ -26,7 +26,7 @@ namespace RenderEngine
 		{
 			if (!createShader(geometryShader, GL_GEOMETRY_SHADER, geometryShaderID))
 			{
-				LOG_ERROR("GEOMETRY SHADER ERROR COMPILE");
+				LOG_ERROR("[shader-program]: GEOMETRY SHADER ERROR COMPILE");
 				glDeleteShader(vertexShaderID);
 				glDeleteShader(fragmentShaderID);
 				return;
@@ -44,7 +44,7 @@ namespace RenderEngine
 		{
 			GLchar infoLog[1024];
 			glGetProgramInfoLog(m_ID, 1024, nullptr, infoLog);
-			LOG_ERROR("PROGRAM: Link: {0}", infoLog);
+			LOG_ERROR("[shader-program]: Link: {0}", infoLog);
 		}
 		else
 		{
@@ -72,7 +72,7 @@ namespace RenderEngine
 		{
 			GLchar infoLog[1024];
 			glGetShaderInfoLog(shaderID, 1024, nullptr, infoLog);
-			LOG_ERROR("SHADER: Compile: {0}", infoLog);
+			LOG_ERROR("[shader-program]: Compile: {0}", infoLog);
 			return false;
 		}
 		return true;

@@ -128,6 +128,8 @@ namespace GUI
 		glm::vec2 get_position_p() { return m_position_p; }
 		glm::vec2 get_scale_p() { return m_scale_p; }
 
+		glm::vec2 get_mouse_click_pos() { return m_position_mouse_click; }
+
 		std::string get_name() { return m_name; }
 
 		bool get_active() { return m_isActive; }

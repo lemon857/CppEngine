@@ -10,13 +10,14 @@
 namespace GUI
 {
 	static unsigned int g_current_sprite_ID = 0;
-	Sprite::Sprite(RenderEngine::Material* pMaterial, std::string initSubTexture, glm::vec2 pos, glm::vec2 scale, std::string name)
+	Sprite::Sprite(RenderEngine::Material* pMaterial, std::string initSubTexture, glm::vec2 pos, glm::vec2 scale, std::string name, bool is_clickable)
 		: GUI_element(name == "default" ? "Sprite" + std::to_string(g_current_sprite_ID++) : name, pMaterial)
 		, m_vertexArray(new RenderEngine::VertexArray())
 		, m_vertexCoordsBuffer(new RenderEngine::VertexBuffer())
 		, m_textureCoordsBuffer(new RenderEngine::VertexBuffer())
 		, m_indexBuffer(new RenderEngine::IndexBuffer())
 	{
+    m_isClickable = is_clickable;
 		m_position_p = pos;
 		m_scale_p = scale;
 		const GLfloat vertexCoords[] = {
@@ -61,13 +62,14 @@ namespace GUI
 	}
 
 	Sprite::Sprite(RenderEngine::ShaderProgram* pShader, RenderEngine::Texture2D* pTexture,
-		std::string initSubTexture, glm::vec2 pos, glm::vec2 scale, std::string name)
+		std::string initSubTexture, glm::vec2 pos, glm::vec2 scale, std::string name, bool is_clickable)
 		: GUI_element(name == "default" ? "Sprite" + std::to_string(g_current_sprite_ID++) : name, new RenderEngine::Material(pShader, pTexture))
 		, m_vertexArray(new RenderEngine::VertexArray())
 		, m_vertexCoordsBuffer(new RenderEngine::VertexBuffer())
 		, m_textureCoordsBuffer(new RenderEngine::VertexBuffer())
 		, m_indexBuffer(new RenderEngine::IndexBuffer())
 	{
+    m_isClickable = is_clickable;
 		m_position_p = pos;
 		m_scale_p = scale;
 		const GLfloat vertexCoords[] = {
@@ -154,5 +156,19 @@ namespace GUI
 
 		RenderEngine::Renderer::drawTriangles(*m_vertexArray, *m_indexBuffer);
 	}
-
+  void Sprite::on_press() {
+		m_isClicked = true;
+		on_mouse_down();
+	}
+	void Sprite::on_release() {
+		if (m_isClicked) {
+      m_isClicked = false;
+    }
+	}
+	void Sprite::on_release_hover() {
+		if (m_isClicked) {
+			on_mouse_up();
+			m_isClicked = false;
+		}
+	}
 }

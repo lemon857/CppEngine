@@ -253,7 +253,7 @@ target_link_libraries(${PROJECT_NAME} glad)
 target_link_libraries(${PROJECT_NAME} freetype)
 
 target_include_directories(${PROJECT_NAME} PUBLIC includes)
-include_directories(external/glm)
+target_include_directories(${PROJECT_NAME} PUBLIC external/glm)
 include_directories(external/rapidjson/include)
 include_directories(external/freetype/include)
 

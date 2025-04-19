@@ -47,7 +47,7 @@ namespace GUI
 	void Button::on_press()
 	{
 		m_face->setSubTexture(NAME_TEXTURE_CLICKED);
-		ResourceManager::get_sound("click")->play();
+		//ResourceManager::get_sound("click")->play();
 		m_isClicked = true;
 		on_mouse_down();
 	}
