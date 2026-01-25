@@ -127,9 +127,13 @@ int Window::init()
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //glfwWindowHint(GLFW_SAMPLES, 4);
+
+//#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+//#endif
+  //glfwWindowHint(GLFW_SAMPLES, 4);
 
     m_pWindow = glfwCreateWindow(m_data.window_size.x, m_data.window_size.y,
         m_data.title.c_str(), nullptr, nullptr);

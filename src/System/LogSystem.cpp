@@ -13,8 +13,9 @@
 #if defined(_WIN32)
 #include <Windows.h>
 #define PATH_PIECE "\\"
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(__APPLE__)
 #define PATH_PIECE "/"
+#define UNIX_WAY_OS
 #endif
 
 std::string LogSystem::m_path;
@@ -71,7 +72,7 @@ void LogSystem::log_info(std::string msg)
 	std::cout << "info";
 	SetConsoleTextAttribute(h, (((0 << 4) | 7)));
 	std::cout << "] " << msg << "\n";
-#elif defined(DEBUG_CONSOLE_LOG) && defined(__linux__)
+#elif defined(DEBUG_CONSOLE_LOG) && defined(UNIX_WAY_OS)
 	std::cout << "[\033[36m" << currentDateTime() << "\033[39m] [\033[32minfo\033[39m] " << msg << "\n";
 #endif
 	std::ofstream stream(m_path, std::ios::app);
@@ -92,7 +93,7 @@ void LogSystem::log_warn(std::string msg)
 	std::cout << "warn";
 	SetConsoleTextAttribute(h, (((0 << 4) | 7)));
 	std::cout << "] " << msg << "\n";
-#elif defined(DEBUG_CONSOLE_LOG) && defined(__linux__)
+#elif defined(DEBUG_CONSOLE_LOG) && defined(UNIX_WAY_OS)
 	std::cout << "[\033[36m" << currentDateTime() << "\033[39m] [\033[33mwarn\033[39m] " << msg << "\n";
 #endif
 	std::ofstream stream(m_path, std::ios::app);
@@ -113,7 +114,7 @@ void LogSystem::log_error(std::string msg)
 	std::cout << "error";
 	SetConsoleTextAttribute(h, (((0 << 4) | 7)));
 	std::cout << "] " << msg << "\n";
-#elif defined(DEBUG_CONSOLE_LOG) && defined(__linux__)
+#elif defined(DEBUG_CONSOLE_LOG) && defined(UNIX_WAY_OS)
 	std::cout << "[\033[36m" << currentDateTime() << "\033[39m] [\033[31merror\033[39m] " << msg << "\n";
 #endif
 	std::ofstream stream(m_path, std::ios::app);
@@ -134,7 +135,7 @@ void LogSystem::log_crit(std::string msg)
 	std::cout << "critical";
 	SetConsoleTextAttribute(h, (((0 << 4) | 7)));
 	std::cout << "] " << msg << "\n";
-#elif defined(DEBUG_CONSOLE_LOG) && defined(__linux__)
+#elif defined(DEBUG_CONSOLE_LOG) && defined(UNIX_WAY_OS)
 	std::cout << "[\033[36m" << currentDateTime() << "\033[39m] [\033[37m\033[41mcritial\033[39m\033[49m] " << msg << "\n";
 #endif
 	std::ofstream stream(m_path, std::ios::app);
