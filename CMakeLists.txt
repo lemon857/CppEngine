@@ -226,16 +226,21 @@ set(ENGINE_PRIVATE_SOURCES
 project(${PROJECT_NAME})
 
 
-	add_library(${PROJECT_NAME}
-		src/appinfo.rc
-		${ENGINE_PRIVATE_SOURCES}
-		${ENGINE_PUBLIC_INCLUDES}
-		${ENGINE_PRIVATE_INCLUDES}	
+add_library(${PROJECT_NAME}
+	src/appinfo.rc
+	${ENGINE_PRIVATE_SOURCES}
+	${ENGINE_PUBLIC_INCLUDES}
+	${ENGINE_PRIVATE_INCLUDES}	
 #if (DEFINED EDITOR_BUILD)				
 #		${ENGINE_PUBLIC_INCLUDES_EDITOR}
 #		${ENGINE_PUBLIC_SRC_EDITOR}
 #endif()
-	)
+)
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC GLM_ENABLE_EXPERIMENTAL)
+
+add_library(glad STATIC external/glad/include/glad/glad.h external/glad/src/glad.c)
+target_include_directories(glad PUBLIC external/glad/include/)
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
@@ -245,7 +250,7 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(external/glfw)
-add_subdirectory(external/glad)
+# add_subdirectory(external/glad)
 add_subdirectory(external/freetype)
 
 target_link_libraries(${PROJECT_NAME} glfw)
