@@ -90,7 +90,6 @@ set(ENGINE_PRIVATE_INCLUDES
 	includes/EngineCore/Sound/SoundEngine.h	
 	includes/EngineCore/Sound/Sound.h	
 	includes/EngineCore/Sound/SoundSet.h
-	includes/EngineCore/Sound/miniaudio.h
 	
 	includes/EngineCore/Renderer3D/GraphicsObject.h
 	includes/EngineCore/Renderer3D/ParticleSystem.h
@@ -176,7 +175,6 @@ set(ENGINE_PRIVATE_SOURCES
 	src/Sound/SoundEngine.cpp
 	src/Sound/Sound.cpp	
 	src/Sound/SoundSet.cpp	
-	src/Sound/miniaudio.cpp
 	
 	src/System/Timer.cpp
 	src/System/Stopwatch.cpp	
@@ -252,11 +250,12 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(external/glfw)
-# add_subdirectory(external/glad)
+add_subdirectory(external/miniaudio)
 add_subdirectory(external/freetype)
 
 target_link_libraries(${PROJECT_NAME} glfw)
 target_link_libraries(${PROJECT_NAME} glad)
+target_link_libraries(${PROJECT_NAME} miniaudio)
 target_link_libraries(${PROJECT_NAME} stb_image)
 target_link_libraries(${PROJECT_NAME} freetype)
 

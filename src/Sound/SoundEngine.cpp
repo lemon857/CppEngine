@@ -3,8 +3,7 @@
 #define MA_NO_WAV
 #define MA_NO_MP3
 #define MA_NO_ENCODING
-#define MINIAUDIO_IMPLEMENTATION
-#include "EngineCore/Sound/miniaudio.h"
+#include <miniaudio.h>
 
 ma_engine* SoundEngine::m_soundEngine;
 bool SoundEngine::is_OK;
