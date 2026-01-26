@@ -3,12 +3,14 @@
 #include "EngineCore/Resources/ResourceManager.h"
 #include "EngineCore/System/SysFunc.h"
 
+#include <cstdio>
 #include <iostream>
 #include <sstream>
 #include <chrono>
 #include <ctime>
 #include <fstream>
 #include <filesystem>
+#include <string>
 
 #if defined(_WIN32)
 #include <Windows.h>
@@ -21,18 +23,17 @@
 std::string LogSystem::m_path;
 
 std::string currentDateTime() {
-	std::time_t t = std::time(nullptr);
-	std::tm* now = std::localtime(&t);
+	const auto currentTime = std::chrono::system_clock::now();
 
-	auto tim = std::chrono::high_resolution_clock::now();
+  std::time_t tt = std::chrono::system_clock::to_time_t(currentTime);
+  auto timeinfo = std::localtime(&tt);
 
-	auto sec = std::chrono::duration_cast<std::chrono::milliseconds>(tim.time_since_epoch()).count();
-
-	std::string tmp = std::to_string(sec);
+	int sec = (currentTime.time_since_epoch().count() / 1000000) % 1000;
 
 	char buffer[128];
-	strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", now);
-	return std::string(buffer) + "." + tmp.substr(tmp.size() - 3);
+	strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
+  snprintf(buffer, sizeof(buffer), "%s.%i", buffer, sec);
+	return std::string(buffer);
 }
 
 void LogSystem::init_log_system(std::string relPathFolder)

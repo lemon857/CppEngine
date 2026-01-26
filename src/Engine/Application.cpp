@@ -52,7 +52,7 @@ int Application::start(glm::ivec2& window_size, const char* title, const char* j
         return -1;
     }
     
-    LOG_INFO("Time initialization: {0}", m_watch->stop());
+    LOG_INFO("Time initialization: {0} ms", m_watch->stop());
     LOG_INFO("==========================================");
     
     delete m_watch;
