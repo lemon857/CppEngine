@@ -33,7 +33,7 @@ namespace GUI
 
 		void render_text(std::wstring text, float x, float y, float scale, glm::vec3 color, float layer, glm::mat4& prj);
 
-		void on_render_prj(glm::mat4 prj);
+		void on_render_prj(glm::mat4 prj) override;
 
 		void set_text(std::string text);
 		void set_text(std::wstring text);

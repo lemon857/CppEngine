@@ -63,6 +63,7 @@ namespace RenderEngine
         case Vec4:
         case Col3:
         case Col4:
+        // case Mat4:
           delete[] (float*)(it->second);
           break;
         }
@@ -164,6 +165,7 @@ namespace RenderEngine
         case Vec4:
         case Col3:
         case Col4:
+        // case Mat4:
           delete[] (float*)(it->second);
           break;
         }

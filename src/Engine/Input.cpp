@@ -264,8 +264,9 @@ std::string Input::getKeyString(KeyCode key)
 		return "m-7";
 	case KeyCode::MOUSE_BUTTON_8:
 		return "m-8";
+  default:
+    return "unknown";
 	}
-	return "-1";
 }
 
 bool Input::isKeyPressed(KeyCode key)

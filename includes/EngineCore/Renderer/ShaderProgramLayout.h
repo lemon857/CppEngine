@@ -11,7 +11,7 @@ enum ETypeData
 	Vec4,
 	Col3,
 	Col4,
-	Mat4
+	// Mat4
 };
 
 namespace RenderEngine
