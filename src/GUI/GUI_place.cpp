@@ -15,8 +15,8 @@ namespace GUI
 	glm::mat4 GUI_place::m_prj_mat;
 
 	GUI_place::GUI_place(Camera* render_cam, RenderEngine::Material* pMaterial)
-		: m_pMaterial(std::move(pMaterial))
-		, m_render_cam(std::move(render_cam))
+		: m_pMaterial(pMaterial)
+		, m_render_cam(render_cam)
 	{
 		m_vp_size = m_render_cam->get_viewport_size();
 		m_prj_mat = m_render_cam->get_ui_matrix();
@@ -26,6 +26,12 @@ namespace GUI
 		m_is_event_logging_active = true;
 #endif
 	}
+
+  GUI_place::~GUI_place() {
+    // for (auto& i : m_elements) {
+    //   delete i.second; 
+    // }
+  }
 
 	void GUI_place::on_update(const double delta)
 	{

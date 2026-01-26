@@ -25,7 +25,7 @@ namespace GUI
 	{
 	public:
 		GUI_place(Camera* render_cam, RenderEngine::Material* pMaterial);
-		~GUI_place() = default; // need add trash clear
+		~GUI_place();
 
 		void on_update(const double delta);
 
@@ -235,7 +235,7 @@ namespace GUI
 		static glm::mat4 m_prj_mat;
 
 		Camera* m_render_cam;
-		std::shared_ptr<RenderEngine::Material> m_pMaterial;
+		RenderEngine::Material* m_pMaterial;
 		
 		std::multimap<std::string, GUI_element*> m_elements;
 

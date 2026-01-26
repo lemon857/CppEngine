@@ -12,6 +12,7 @@
 #include "EngineCore/System/Loaders.h"
 #include "EngineCore/Sound/Sound.h"
 
+#include <algorithm>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -40,43 +41,44 @@ LanguagePack* ResourceManager::m_current_lang_pack;
 //ResourceManager::AnimatorsMap ResourceManager::m_animators;
 std::string ResourceManager::m_path;
 
-void ResourceManager::unloadAllResources()
-{
-	for (auto& i : m_ShaderPrograms)
-	{
+void ResourceManager::unloadAllResources() {
+  LOG_INFO("Removing shader programs");
+	for (auto& i : m_ShaderPrograms) {
 		delete i.second;
 	}
 	m_ShaderPrograms.clear();
 
-	for (auto& i : m_textures)
-	{
+  LOG_INFO("Removing textures");
+	for (auto& i : m_textures) {
 		delete i.second;
 	}
 	m_textures.clear();
 
-	for (auto& i : m_materials)
-	{
+  LOG_INFO("Removing materials");
+	for (auto& i : m_materials) {
 		delete i.second;
 	}
 	m_materials.clear();
 
-	for (auto& i : m_graphics_objects)
-	{
+  LOG_INFO("Removing graphics objects");
+	for (auto& i : m_graphics_objects) {
 		delete i.second;
 	}
 	m_graphics_objects.clear();
 
-	for (auto& i : m_fonts_map)
-	{
+  LOG_INFO("Removing font maps");
+	for (auto& i : m_fonts_map) {
 		delete i.second;
 	}
 	m_fonts_map.clear();
 
-	for (auto& i : m_sounds_map)
-	{
+  LOG_INFO("Removing sound maps");
+	for (auto& i : m_sounds_map) {
 		delete i.second;
 	}
 	m_sounds_map.clear();
+  
+  LOG_INFO("Removing unique sound maps");
 	m_uSounds_map.clear();
 	//m_SpriteRenderers.clear();
 }
@@ -586,6 +588,8 @@ RenderEngine::Material* ResourceManager::loadMaterial(const std::string& materia
 
 	RenderEngine::Material* newMaterial =
 	m_materials.emplace(materialName, new RenderEngine::Material(shader, texture)).first->second;
+
+  LOG_INFO("Success load material: {0}", materialName);
 
 	return newMaterial;
 }

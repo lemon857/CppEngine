@@ -1,6 +1,7 @@
 #include "EngineCore/Renderer/Material.h"
 
 #include "EngineCore/System/ShadersSettings.h"
+#include "EngineCore/System/Log.h"
 
 #include "EngineCore/Renderer/ShaderProgram.h"
 #include "EngineCore/Renderer/Texture2D.h"
@@ -12,6 +13,7 @@ namespace RenderEngine
 		: m_pShaderProgram(std::move(pShaderProgram))
 		, m_pTexture(std::move(pTexture))
 	{
+    LOG_INFO("Start init shader layout in material");
 		m_shader_layout_elemrnts = m_pShaderProgram->get_layout()->getLayoutElements();
 		for (const auto& curElements : m_shader_layout_elemrnts)
 		{
@@ -38,6 +40,7 @@ namespace RenderEngine
 				break;
 			}
 		}
+    LOG_INFO("Finish init shader layout in material");
 	}
 
 	Material::~Material()
