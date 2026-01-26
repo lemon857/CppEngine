@@ -267,6 +267,7 @@ std::string Input::getKeyString(KeyCode key)
   default:
     return "unknown";
 	}
+  return "unknown";
 }
 
 bool Input::isKeyPressed(KeyCode key)

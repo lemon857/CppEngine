@@ -62,8 +62,6 @@ set(ENGINE_PRIVATE_INCLUDES
 	includes/EngineCore/Engine/Window.h
 	
 	includes/EngineCore/Resources/ResourceManager.h
-	includes/EngineCore/Resources/stb_image.h
-	includes/EngineCore/Resources/stb_image_write.h
 	includes/EngineCore/Resources/Scene.h
 	includes/EngineCore/Resources/RegistryManager.h
 	includes/EngineCore/Resources/LanguagePack.h
@@ -123,7 +121,6 @@ set(ENGINE_PRIVATE_SOURCES
 	src/Engine/Engine.cpp
 	src/Engine/Window.cpp
 	src/Engine/Application.cpp
-	src/Engine/Input.cpp
 	
 	#src/Examples/TanksDemo/TanksDemoGame.cpp
 	#src/Examples/TanksDemo/TanksDemoGame.h
@@ -187,7 +184,8 @@ set(ENGINE_PRIVATE_SOURCES
 	src/System/SysFunc.cpp	
 	src/System/SysFunc.cpp	
 	src/System/CommandManager.cpp
-	src/System/Loaders.cpp		
+	src/System/Loaders.cpp
+  src/System/Input.cpp
 	
 	src/Components/MeshRenderer.cpp	
 	src/Components/Transform.cpp
@@ -242,6 +240,10 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC GLM_ENABLE_EXPERIMENTAL)
 add_library(glad STATIC external/glad/include/glad/glad.h external/glad/src/glad.c)
 target_include_directories(glad PUBLIC external/glad/include/)
 
+add_library(stb_image INTERFACE external/stb/stb_image.h external/stb/stb_image_write.h)
+target_include_directories(stb_image INTERFACE external/stb/)
+set_target_properties(stb_image PROPERTIES LINKER_LANGUAGE CXX)
+
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -255,6 +257,7 @@ add_subdirectory(external/freetype)
 
 target_link_libraries(${PROJECT_NAME} glfw)
 target_link_libraries(${PROJECT_NAME} glad)
+target_link_libraries(${PROJECT_NAME} stb_image)
 target_link_libraries(${PROJECT_NAME} freetype)
 
 target_include_directories(${PROJECT_NAME} PUBLIC includes)

@@ -20,8 +20,8 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION 
 #define STBI_ONLY_PNG
 #define STBI_ONLY_JPEG
-#include "EngineCore/Resources/stb_image.h"
-#include "EngineCore/Resources/stb_image_write.h"
+#include <stb_image.h>
+#include <stb_image_write.h>
 
 void INIdata::add_region(std::string name, BaseINIregion* region)
 {
