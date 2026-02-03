@@ -39,14 +39,14 @@ std::string currentDateTime() {
 void LogSystem::init_log_system(std::string relPathFolder)
 { 	
 	std::filesystem::create_directory(ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder);
-	if (std::filesystem::exists(ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder + PATH_PIECE + "lastest.log"))
+	if (std::filesystem::exists(ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder + PATH_PIECE + "latest.log"))
 	{
 		std::time_t t = std::time(nullptr);
 		std::tm* now = std::localtime(&t);
 		char buffer[128];
 		strftime(buffer, sizeof(buffer), "%Y-%m-%d_%H-%M-%S", now);
 
-		std::filesystem::copy_file(ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder + PATH_PIECE + "lastest.log", 
+		std::filesystem::copy_file(ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder + PATH_PIECE + "latest.log", 
 			ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder + PATH_PIECE + buffer + ".log");
 	}
 	m_path = ResourceManager::getExeFilePath() + PATH_PIECE + relPathFolder + PATH_PIECE + "lastest.log";

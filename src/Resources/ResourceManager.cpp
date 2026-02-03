@@ -26,6 +26,8 @@
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 
+#define DEBUG_RESOURSES_PREFIX "[ResourceManager] "
+
 ResourceManager::ShaderProgramsMap ResourceManager::m_ShaderPrograms;
 ResourceManager::TexturesMap ResourceManager::m_textures;
 ResourceManager::CubeTexturesMap ResourceManager::m_cube_textures;
@@ -42,43 +44,43 @@ LanguagePack* ResourceManager::m_current_lang_pack;
 std::string ResourceManager::m_path;
 
 void ResourceManager::unloadAllResources() {
-  LOG_INFO("Removing shader programs");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing shader programs");
 	for (auto& i : m_ShaderPrograms) {
 		delete i.second;
 	}
 	m_ShaderPrograms.clear();
 
-  LOG_INFO("Removing textures");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing textures");
 	for (auto& i : m_textures) {
 		delete i.second;
 	}
 	m_textures.clear();
 
-  LOG_INFO("Removing materials");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing materials");
 	for (auto& i : m_materials) {
 		delete i.second;
 	}
 	m_materials.clear();
 
-  LOG_INFO("Removing graphics objects");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing graphics objects");
 	for (auto& i : m_graphics_objects) {
 		delete i.second;
 	}
 	m_graphics_objects.clear();
 
-  LOG_INFO("Removing font maps");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing font maps");
 	for (auto& i : m_fonts_map) {
 		delete i.second;
 	}
 	m_fonts_map.clear();
 
-  LOG_INFO("Removing sound maps");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing sound maps");
 	for (auto& i : m_sounds_map) {
 		delete i.second;
 	}
 	m_sounds_map.clear();
   
-  LOG_INFO("Removing unique sound maps");
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Removing unique sound maps");
 	m_uSounds_map.clear();
 	//m_SpriteRenderers.clear();
 }
@@ -92,15 +94,15 @@ bool ResourceManager::load_JSON_resources(const std::string & JSONpath)
 	const std::string JSONstr = getFileString(JSONpath);
 	if (JSONstr.empty())
 	{
-		LOG_CRIT("No JSON file: {0}", JSONpath);
+		LOG_CRIT(DEBUG_RESOURSES_PREFIX "No JSON file: {0}", JSONpath);
 		return false;
 	}
 	rapidjson::Document doc;
 	rapidjson::ParseResult result = doc.Parse(JSONstr.c_str());
 	if (!result)
 	{
-		LOG_CRIT("JSON parse error: {0} ({1})", rapidjson::GetParseError_En(result.Code()),  result.Offset());
-		LOG_CRIT("In JSON file: ", JSONpath);
+		LOG_CRIT(DEBUG_RESOURSES_PREFIX "JSON parse error: {0} ({1})", rapidjson::GetParseError_En(result.Code()),  result.Offset());
+		LOG_CRIT(DEBUG_RESOURSES_PREFIX "In JSON file: ", JSONpath);
 		return false;
 	}
 
@@ -229,7 +231,7 @@ bool ResourceManager::load_JSON_resources(const std::string & JSONpath)
 			load_lang_pack(path, name);
 		}
 	}
-	LOG_INFO("Loadind data from JSON file complete");
+	LOG_INFO(DEBUG_RESOURSES_PREFIX "Loadind data from JSON file complete");
 	return true;
 }
 bool ResourceManager::load_JSON_models(const std::string& JSONpath)
@@ -237,15 +239,15 @@ bool ResourceManager::load_JSON_models(const std::string& JSONpath)
 	const std::string JSONstr = getFileString(JSONpath);
 	if (JSONstr.empty())
 	{
-		LOG_CRIT("No JSON file: {0}", JSONpath);
+		LOG_CRIT(DEBUG_RESOURSES_PREFIX "No JSON file: {0}", JSONpath);
 		return false;
 	}
 	rapidjson::Document doc;
 	rapidjson::ParseResult result = doc.Parse(JSONstr.c_str());
 	if (!result)
 	{
-		LOG_CRIT("JSON parse error: {0} ({1})", rapidjson::GetParseError_En(result.Code()), result.Offset());
-		LOG_CRIT("In JSON file: ", JSONpath);
+		LOG_CRIT(DEBUG_RESOURSES_PREFIX "JSON parse error: {0} ({1})", rapidjson::GetParseError_En(result.Code()), result.Offset());
+		LOG_CRIT(DEBUG_RESOURSES_PREFIX "In JSON file: ", JSONpath);
 		return false;
 	}
 
@@ -261,13 +263,13 @@ bool ResourceManager::load_JSON_models(const std::string& JSONpath)
 			const std::string type = currentModel["type"].GetString();
 			while (loadGraphicsObject(name, path, type) == nullptr)
 			{
-				LOG_WARN("Failed load OBJ model");
+				LOG_WARN(DEBUG_RESOURSES_PREFIX "Failed load OBJ model");
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 			}
 		}
 	}
 	
-	LOG_INFO("Reloadind models from JSON file complete");
+	LOG_INFO(DEBUG_RESOURSES_PREFIX "Reloadind models from JSON file complete");
 	return true;
 }
 bool ResourceManager::load_INI_settings(const std::string& INIpath, INIdata& data, const bool isWrite)
@@ -275,7 +277,7 @@ bool ResourceManager::load_INI_settings(const std::string& INIpath, INIdata& dat
 	loaders::ErrorCode a = loaders::load_ini(m_path + "/" + INIpath, data, isWrite);
 	if (a != loaders::ErrorCode::null)
 	{
-		LOG_ERROR("Error open file: {0}", INIpath);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Error open ini file: {0}", INIpath);
 		return false;
 	}
 	return true;
@@ -288,12 +290,12 @@ GUI::Font* ResourceManager::load_font(std::string relativePath, std::string font
 	{
 		m_fonts_map.emplace(font_name, font);
 
-		LOG_INFO("Success load font: {0}", font_name);
+		LOG_INFO(DEBUG_RESOURSES_PREFIX "Success load font: {0}", font_name);
 
 		return font;
 	}
 
-	LOG_ERROR("Error load font: {0}", font_name);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Error load font: {0}", font_name);
 
 	return nullptr;
 }
@@ -304,7 +306,7 @@ GUI::Font* ResourceManager::get_font(std::string font_name)
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find font: {0}", font_name);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find font: {0}", font_name);
 	return nullptr;
 }
 Sound* ResourceManager::load_sound(std::string relativePath, std::string name)
@@ -312,7 +314,7 @@ Sound* ResourceManager::load_sound(std::string relativePath, std::string name)
 	Sound* sound = new Sound();
 	if (sound->init((m_path + "/" + relativePath).c_str()) != 0)
 	{
-		LOG_ERROR("Error load sound: {0}", name);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Error load sound: {0}", name);
 		return nullptr;
 	}
 	m_sounds_map.emplace(name, sound);
@@ -325,7 +327,7 @@ Sound* ResourceManager::get_sound(std::string name)
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find sound: {0}", name);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find sound: {0}", name);
 	return nullptr;
 }
 void ResourceManager::load_unique_sound(std::string relativePath, std::string name)
@@ -340,12 +342,12 @@ std::unique_ptr<Sound> ResourceManager::get_unique_sound(std::string name)
 		std::unique_ptr<Sound> sound = std::make_unique<Sound>();
 		if (sound->init(it->second.c_str()) != 0)
 		{
-			LOG_ERROR("Error load unique sound: {0}", name);
+			LOG_ERROR(DEBUG_RESOURSES_PREFIX "Error load unique sound: {0}", name);
 			return nullptr;
 		}
 		return std::move(sound);
 	}
-	LOG_ERROR("Can't find unique sound: {0}", name);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find unique sound: {0}", name);
 	return nullptr;
 }
 bool ResourceManager::load_scene(std::string relativePath, Scene& scene)
@@ -357,12 +359,12 @@ bool ResourceManager::load_scene(std::string relativePath, Scene& scene)
 	fin.open(m_path + "/" + relativePath, std::ifstream::app);
 	if (!fin.is_open())
 	{
-		LOG_ERROR("File {0} doesn't open for read", relativePath);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "File {0} doesn't open for read", relativePath);
 		return false;
 	}
 	else
 	{
-		LOG_INFO("Complete load scene in {0}", relativePath);
+		LOG_INFO(DEBUG_RESOURSES_PREFIX "Complete load scene in {0}", relativePath);
 		fin.read((char*)&objs, sizeof(objs));
 	}
 
@@ -383,12 +385,12 @@ bool ResourceManager::save_scene(std::string relativePath, const Scene& scene)
 
 	if (!fout.is_open())
 	{
-		LOG_ERROR("File {0} doesn't open for write", relativePath);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "File {0} doesn't open for write", relativePath);
 		return false;
 	}
 	else
 	{
-		LOG_INFO("Complete save scene in {0}", relativePath);
+		LOG_INFO(DEBUG_RESOURSES_PREFIX "Complete save scene in {0}", relativePath);
 		//fout.write((char*)&objs, sizeof(objs));
 	}
 
@@ -404,18 +406,18 @@ GraphicsObject* ResourceManager::loadGraphicsObject(const std::string& name, con
 
 		if (model == nullptr)
 		{
-			LOG_WARN("Failed load OBJ file: {0}", relativePath);
+			LOG_WARN(DEBUG_RESOURSES_PREFIX "Failed load OBJ file: {0}", relativePath);
 			return nullptr;
 		}
 		else
 		{
 			GraphicsObject* newOBJ =
 				m_graphics_objects.emplace(name, new GraphicsObject(std::move(model))).first->second;
-			LOG_INFO("Success load OBJ file: {0}", relativePath);
+			LOG_INFO(DEBUG_RESOURSES_PREFIX "Success load OBJ file: {0}", relativePath);
 			return newOBJ;
 		}
 	}
-	LOG_ERROR("Error type model: {0}", type);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Error type model: {0}", type);
 	return nullptr;
 }
 GraphicsObject* ResourceManager::getGraphicsObject(const std::string& name)
@@ -425,7 +427,7 @@ GraphicsObject* ResourceManager::getGraphicsObject(const std::string& name)
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find OBJ model: {0}", name);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find OBJ model: {0}", name);
 	return nullptr;
 }
 LanguagePack* ResourceManager::load_lang_pack(std::string relativePath, std::string pack_name)
@@ -442,7 +444,7 @@ LanguagePack* ResourceManager::get_lang_pack(std::string pack_name)
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find lang pack: {0}", pack_name);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find lang pack: {0}", pack_name);
 	return nullptr;
 }
 std::string ResourceManager::getFileString(const std::string& relativeFilePath)
@@ -451,7 +453,7 @@ std::string ResourceManager::getFileString(const std::string& relativeFilePath)
 	f.open(m_path + "/" + relativeFilePath, std::ios::in | std::ios::binary);
 	if (!f.is_open()) 
 	{
-		LOG_ERROR("Failed to open file: {0}", relativeFilePath);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Failed to open file: {0}", relativeFilePath);
 		f.close();
 		return std::string();
 	}
@@ -468,13 +470,13 @@ RenderEngine::ShaderProgram* ResourceManager::loadShaders(const std::string& sha
 	std::string vertexString = getFileString(vertexPath);
 	if (vertexString.empty()) 
 	{
-		LOG_ERROR("Vertex shader file is empty");
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Vertex shader file is empty");
 		return nullptr;
 	}
 	std::string fragmentString = getFileString(fragmentPath);
 	if (fragmentString.empty())
 	{
-		LOG_ERROR("Fragment shader file is empty");
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Fragment shader file is empty");
 		return nullptr;
 	}
 	std::string geometryString = "";
@@ -483,7 +485,7 @@ RenderEngine::ShaderProgram* ResourceManager::loadShaders(const std::string& sha
 		geometryString = getFileString(fragmentPath);
 		if (geometryString.empty())
 		{
-			LOG_ERROR("Geometry shader file is empty");
+			LOG_ERROR(DEBUG_RESOURSES_PREFIX "Geometry shader file is empty");
 			return nullptr;
 		}
 	}
@@ -498,17 +500,17 @@ RenderEngine::ShaderProgram* ResourceManager::loadShaders(const std::string& sha
 
 		if (newShader->isCompiled())
 		{
-			LOG_INFO("Complete load & compile shader program: {0}", shaderName);
+			LOG_INFO(DEBUG_RESOURSES_PREFIX "Complete load & compile shader program: {0}", shaderName);
 			return newShader;
 		}
 		else
 		{
 			if (geometryPath.empty())
 			{
-				LOG_ERROR("Can't load shader program: \nVertex: {0} \nFragment: {1}", vertexPath, fragmentPath);
+				LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't load shader program: \nVertex: {0} \nFragment: {1}", vertexPath, fragmentPath);
 				return nullptr;
 			}
-			LOG_ERROR("Can't load shader program: \nVertex: {0} \nFragment: {1} \nGeometry: {2}", vertexPath, fragmentPath, geometryPath);
+			LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't load shader program: \nVertex: {0} \nFragment: {1} \nGeometry: {2}", vertexPath, fragmentPath, geometryPath);
 			return nullptr;
 		}
 	}
@@ -526,7 +528,7 @@ RenderEngine::ShaderProgram* ResourceManager::getShaderProgram(const std::string
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find shader program: {0}", shaderName);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find shader program: {0}", shaderName);
 	return nullptr;
 }
 RenderEngine::Texture2D* ResourceManager::loadTexture(const std::string& textureName, const std::string& texturePath)
@@ -538,7 +540,7 @@ RenderEngine::Texture2D* ResourceManager::loadTexture(const std::string& texture
 
 	if (!pixels)
 	{
-		LOG_ERROR("Can't load image: {0}", texturePath);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't load image: {0}", texturePath);
 		return nullptr;
 	}
 
@@ -556,7 +558,7 @@ RenderEngine::Texture2D* ResourceManager::getTexture(const std::string& textureN
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find texture: {0}", textureName);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find texture: {0}", textureName);
 	return nullptr;
 }
 RenderEngine::Texture3D* ResourceManager::loadTexture3D(const std::string& textureName, const std::vector<std::string>& texturePath)
@@ -572,7 +574,7 @@ RenderEngine::Texture3D* ResourceManager::getTexture3D(const std::string& textur
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find texture3D: {0}", textureName);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find texture3D: {0}", textureName);
 	return nullptr;
 }
 RenderEngine::Material* ResourceManager::loadMaterial(const std::string& materialName, const std::string& textureName, const std::string& shaderName)
@@ -582,14 +584,14 @@ RenderEngine::Material* ResourceManager::loadMaterial(const std::string& materia
 
 	if (shader == nullptr)
 	{
-		LOG_ERROR("Can't find shader program {0} for material {1}", shaderName, materialName);
+		LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find shader program {0} for material {1}", shaderName, materialName);
 		return nullptr;
 	}
 
 	RenderEngine::Material* newMaterial =
 	m_materials.emplace(materialName, new RenderEngine::Material(shader, texture)).first->second;
 
-  LOG_INFO("Success load material: {0}", materialName);
+  LOG_INFO(DEBUG_RESOURSES_PREFIX "Success load material: {0}", materialName);
 
 	return newMaterial;
 }
@@ -600,7 +602,7 @@ RenderEngine::Material* ResourceManager::getMaterial(const std::string& material
 	{
 		return it->second;
 	}
-	LOG_ERROR("Can't find material: {0}", materialName);
+	LOG_ERROR(DEBUG_RESOURSES_PREFIX "Can't find material: {0}", materialName);
 	return nullptr;
 }
 std::vector<std::string> ResourceManager::getNamesShadersProgram()
