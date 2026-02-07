@@ -36,7 +36,7 @@ namespace RenderEngine
 		Texture2D& operator=(Texture2D&& texture2D) noexcept;
 		Texture2D(Texture2D&& texture2D) noexcept;
 
-    void updateData(const GLuint width, const GLuint height, unsigned char* data, const unsigned int channels);
+    void updateData(const GLuint width, const GLuint height, const unsigned char* data, const unsigned int channels);
 
 		void bind() const;
 		unsigned int width() { return m_width; };

@@ -84,7 +84,7 @@ namespace RenderEngine
 		const static SubTexture2D defaultSubTexture2D;
 		return defaultSubTexture2D;
 	}
-  void Texture2D::updateData(const GLuint width, const GLuint height, unsigned char* data, const unsigned int channels) {
+  void Texture2D::updateData(const GLuint width, const GLuint height, const unsigned char* data, const unsigned int channels) {
     if (m_width == width && m_height == height) {      
       glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, m_ID);
